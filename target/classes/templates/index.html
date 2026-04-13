@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unified Loan Intelligence | Dashboard</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <link rel="stylesheet" th:href="@{/css/style.css?v=10}" href="/css/style.css?v=10">
+</head>
+<body class="bg-dark">
+    <div class="bg-mesh"></div>
+    <div class="floating-blob" style="top:10%;left:-5%;"></div>
+    <div class="floating-blob" style="bottom:10%;right:-5%;animation-delay:-5s;"></div>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-brand">
+            <div class="nav-logo"><i class="fas fa-landmark"></i></div>
+            <span class="nav-title">ULIS <span class="text-indigo">Intelligence</span></span>
+        </div>
+        <div class="nav-links">
+            <a th:href="@{/}" class="nav-link">Home</a>
+            <a th:href="@{/eligibility}" class="nav-link">Eligibility</a>
+            <a th:href="@{/emi-calculator}" class="nav-link">EMI Calculator</a>
+        </div>
+        <div class="nav-actions">
+            <button class="btn-logout" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
+        </div>
+    </nav>
+
+    <main class="main-wrapper">
+        <!-- Left: Hero -->
+        <section class="hero-content">
+            <div class="hero-tag">🔥 Faster. Smarter. Secure.</div>
+            <h1 class="gradient-text">Instant Loan Approval,<br>Smarter Decisions.</h1>
+            <p>Our AI-driven engine analyzes your profile in seconds to give you the best loan rates with minimum documentation.</p>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <i class="fas fa-bolt text-indigo"></i>
+                    <h3>Fast Approval</h3>
+                    <p>Under 60 seconds processing</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-shield-alt text-purple"></i>
+                    <h3>Secure & Encrypted</h3>
+                    <p>Bank-grade security protocols</p>
+                </div>
+            </div>
+
+            <div class="trust-badges">
+                <div class="badge-item"><i class="fas fa-check-circle"></i> RBI Guidelines</div>
+                <div class="badge-item"><i class="fas fa-star"></i> 4.8 Rating</div>
+                <div class="badge-item"><i class="fas fa-lock"></i> SSL Secured</div>
+            </div>
+        </section>
+
+        <!-- Right: Stepper Form -->
+        <section class="glass-card">
+            <!-- Stepper -->
+            <div class="stepper">
+                <div class="step-item active" id="step-marker-1">
+                    <div class="step-circle"></div>
+                    <span class="step-label">Identity</span>
+                </div>
+                <div class="step-item" id="step-marker-2">
+                    <div class="step-circle"></div>
+                    <span class="step-label">Wealth</span>
+                </div>
+                <div class="step-item" id="step-marker-3">
+                    <div class="step-circle"></div>
+                    <span class="step-label">Goal</span>
+                </div>
+            </div>
+
+            <div id="loanForm" class="relative">
+                <!-- Loading Overlay -->
+                <div id="loadingOverlay" class="loading-overlay">
+                    <div class="spinner"></div>
+                    <p class="loading-text">Analyzing Profile...</p>
+                </div>
+
+                <!-- Step 1: Identity -->
+                <div class="step-content active" id="step-1">
+                    <h3 class="step-title">Identity Verification <i class="fas fa-id-card text-indigo"></i></h3>
+                    <div class="form-group">
+                        <label>FULL NAME</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-user"></i>
+                            <input type="text" id="nameInput" placeholder="John Doe" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>AGE (21–60)</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-calendar-alt"></i>
+                            <input type="number" id="ageInput" placeholder="25" min="18" max="100" oninput="updateSimulation()">
+                        </div>
+                        <p class="field-hint">Verification requires age between 21 and 60.</p>
+                    </div>
+                    <button type="button" class="btn-primary" onclick="validateStep1()">Next Step <i class="fas fa-arrow-right"></i></button>
+                </div>
+
+                <!-- Step 2: Financial -->
+                <div class="step-content" id="step-2">
+                    <h3 class="step-title">Financial Intelligence <i class="fas fa-chart-line text-indigo"></i></h3>
+                    <div class="form-group">
+                        <label>MONTHLY INCOME (₹)</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-wallet"></i>
+                            <input type="number" id="incomeInput" placeholder="25000" oninput="updateSimulation()">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>CREDIT SCORE: <span class="text-indigo font-bold" id="scoreValue">750</span></label>
+                        <input type="range" id="scoreSlider" min="300" max="900" value="750" class="slider" oninput="updateSimulation()">
+                    </div>
+                    <div class="form-group">
+                        <label>EXISTING MONTHLY EMIs (₹)</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-credit-card"></i>
+                            <input type="number" id="existingEmiInput" placeholder="0" oninput="updateSimulation()">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>EMPLOYMENT TYPE</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-briefcase"></i>
+                            <select id="empInput" onchange="updateSimulation()">
+                                <option value="Salaried">Salaried Professional</option>
+                                <option value="Self-Employed">Entrepreneur / Self-Employed</option>
+                                <option value="Student">Student (Limited Eligibility)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="flex-gap">
+                        <button type="button" class="btn-back" onclick="nextStep(1)"><i class="fas fa-chevron-left"></i></button>
+                        <button type="button" class="btn-primary flex-1" onclick="nextStep(3)">Configure Loan <i class="fas fa-cog"></i></button>
+                    </div>
+                </div>
+
+                <!-- Step 3: Loan Config -->
+                <div class="step-content" id="step-3">
+                    <h3 class="step-title">Loan Architecture <i class="fas fa-money-check-alt text-indigo"></i></h3>
+                    <div class="form-group">
+                        <label>LOAN PURPOSE</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-tag"></i>
+                            <select id="loanTypeInput" onchange="updateSimulation()">
+                                <option value="Personal">Personal Growth Loan</option>
+                                <option value="Home">Home Mortgage (8.0% APR)</option>
+                                <option value="Auto">Auto Financing</option>
+                                <option value="Business">Business Expansion</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>LOAN AMOUNT: <span class="text-indigo font-bold" id="amountValue">₹25,000</span></label>
+                        <input type="range" id="amountSlider" min="5000" max="500000" step="5000" value="25000" class="slider" oninput="updateSimulation()">
+                    </div>
+                    <div class="form-group">
+                        <label>TENURE: <span class="text-indigo font-bold" id="tenureValue">24 Months</span></label>
+                        <input type="range" id="tenureSlider" min="6" max="120" step="6" value="24" class="slider" oninput="updateSimulation()">
+                    </div>
+                    <div class="flex-gap">
+                        <button type="button" class="btn-back" onclick="nextStep(2)"><i class="fas fa-chevron-left"></i></button>
+                        <button type="button" class="btn-primary flex-1" id="submitBtn" onclick="submitLoan()">
+                            <span>Execute Analysis</span> <i class="fas fa-brain"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Live Intelligence Panel -->
+            <div class="live-summary">
+                <div class="live-header">
+                    <div>
+                        <h4 class="live-subtitle">Live Intelligence</h4>
+                        <div class="live-indicator"><div class="pulse-dot"></div><span>Real-time Simulation</span></div>
+                    </div>
+                    <div class="status-badge eligible" id="statusBadge">ELIGIBLE</div>
+                </div>
+                <div class="live-stats">
+                    <div class="stat-card"><span class="stat-label">Eligible Cap</span><div class="stat-value" id="liveEligible">₹0</div></div>
+                    <div class="stat-card"><span class="stat-label">Estimated EMI</span><div class="stat-value" id="liveEMI">₹0</div></div>
+                </div>
+                <div class="risk-row">
+                    <span class="risk-label-text">Risk Assessment</span>
+                    <span class="risk-label" id="riskLabel">LOW RISK</span>
+                </div>
+                <div class="risk-meter-container"><div class="risk-meter-bar" id="riskBar"></div></div>
+                <p id="liveReason" class="live-reason">Fill the form to see your intelligent loan assessment.</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- Toast -->
+    <div id="toast" class="toast">
+        <div class="toast-inner">
+            <i class="fas fa-info-circle" id="toastIcon"></i>
+            <span id="toastMsg"></span>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:8080/api';
+        let currentStep = 1;
+
+        // Auth guard
+        if (sessionStorage.getItem('loggedIn') !== 'true') {
+            window.location.href = 'login.html';
+        }
+
+        function logout() {
+            sessionStorage.removeItem('loggedIn');
+            window.location.href = 'login.html';
+        }
+
+        function showToast(msg, isError = false) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMsg').innerText = msg;
+            const icon = document.getElementById('toastIcon');
+            icon.className = isError ? 'fas fa-exclamation-circle text-red' : 'fas fa-check-circle text-green';
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3500);
+        }
+
+        function validateStep1() {
+            const name = document.getElementById('nameInput').value.trim();
+            const age = parseInt(document.getElementById('ageInput').value);
+            if (!name) { showToast('Please enter your full name.', true); return; }
+            if (!age || isNaN(age)) { showToast('Please enter your age.', true); return; }
+            if (age < 21 || age > 60) showToast('Age should be between 21–60 for best eligibility.', true);
+            nextStep(2);
+        }
+
+        function nextStep(step) {
+            gsap.to(`#step-${currentStep}`, {
+                opacity: 0, x: -20, duration: 0.3, onComplete: () => {
+                    document.getElementById(`step-${currentStep}`).classList.remove('active');
+                    document.getElementById(`step-marker-${currentStep}`).classList.remove('active');
+                    if (currentStep < step) document.getElementById(`step-marker-${currentStep}`).classList.add('completed');
+                    currentStep = step;
+                    document.getElementById(`step-${currentStep}`).classList.add('active');
+                    document.getElementById(`step-marker-${currentStep}`).classList.add('active');
+                    gsap.fromTo(`#step-${currentStep}`, { opacity: 0, x: 20 }, { opacity: 1, x: 0, duration: 0.4 });
+                }
+            });
+        }
+
+        function updateSimulation() {
+            const age = parseInt(document.getElementById('ageInput').value) || 0;
+            const income = parseFloat(document.getElementById('incomeInput').value) || 0;
+            const score = parseInt(document.getElementById('scoreSlider').value) || 0;
+            const existingEmi = parseFloat(document.getElementById('existingEmiInput').value) || 0;
+            const amount = parseFloat(document.getElementById('amountSlider').value) || 0;
+            const tenure = parseInt(document.getElementById('tenureSlider').value) || 1;
+            const loanType = document.getElementById('loanTypeInput').value;
+
+            document.getElementById('scoreValue').innerText = score;
+            document.getElementById('amountValue').innerText = '₹' + amount.toLocaleString('en-IN');
+            document.getElementById('tenureValue').innerText = tenure + ' Months';
+
+            let isEligible = true;
+            let reason = 'Profile looks stable for processing.';
+            const eligibleMax = income * 0.45 * 36;
+            const dti = income > 0 ? existingEmi / income : 0;
+
+            if (age < 21 || age > 60) { isEligible = false; reason = 'Age outside 21–60 eligibility range.'; }
+            else if (income < 15000) { isEligible = false; reason = 'Minimum monthly income condition not met.'; }
+            else if (score < 650) { isEligible = false; reason = 'Credit score below threshold.'; }
+            else if (dti > 0.45) { isEligible = false; reason = 'Debt-to-income exceeds 45% limit.'; }
+
+            const badge = document.getElementById('statusBadge');
+            if (!isEligible) {
+                badge.innerText = 'NOT ELIGIBLE'; badge.className = 'status-badge not-eligible';
+                document.getElementById('liveEMI').innerText = '–';
+                document.getElementById('liveEligible').innerText = '₹0';
+                document.getElementById('riskLabel').innerText = 'HIGH RISK 🔴';
+                document.getElementById('riskLabel').className = 'risk-label text-red';
+                if (typeof gsap !== 'undefined') gsap.to('#riskBar', { width: '90%', backgroundColor: '#f43f5e', duration: 1 });
+            } else {
+                badge.innerText = 'ELIGIBLE'; badge.className = 'status-badge eligible';
+                document.getElementById('liveEligible').innerText = '₹' + Math.round(eligibleMax).toLocaleString('en-IN');
+                let rate = (score >= 750) ? 0.085 : 0.105;
+                if (loanType === 'Home') rate -= 0.005;
+                const mr = rate / 12;
+                const emi = amount > 0 && tenure > 0 ? (amount * mr * Math.pow(1 + mr, tenure)) / (Math.pow(1 + mr, tenure) - 1) : 0;
+                document.getElementById('liveEMI').innerText = '₹' + Math.round(emi).toLocaleString('en-IN');
+                if (score >= 750) {
+                    document.getElementById('riskLabel').innerText = 'LOW RISK 🟢';
+                    document.getElementById('riskLabel').className = 'risk-label text-green';
+                    if (typeof gsap !== 'undefined') gsap.to('#riskBar', { width: '25%', backgroundColor: '#10b981', duration: 1 });
+                } else {
+                    document.getElementById('riskLabel').innerText = 'MODERATE 🟡';
+                    document.getElementById('riskLabel').className = 'risk-label text-yellow';
+                    if (typeof gsap !== 'undefined') gsap.to('#riskBar', { width: '60%', backgroundColor: '#f59e0b', duration: 1 });
+                }
+            }
+            document.getElementById('liveReason').innerText = reason;
+        }
+
+        async function submitLoan() {
+            const overlay = document.getElementById('loadingOverlay');
+            overlay.classList.add('active');
+
+            const payload = {
+                applicantName: document.getElementById('nameInput').value,
+                age: parseInt(document.getElementById('ageInput').value) || 0,
+                monthlyIncome: parseFloat(document.getElementById('incomeInput').value) || 0,
+                creditScore: parseInt(document.getElementById('scoreSlider').value) || 0,
+                existingEmi: parseFloat(document.getElementById('existingEmiInput').value) || 0,
+                employmentType: document.getElementById('empInput').value,
+                loanType: document.getElementById('loanTypeInput').value,
+                loanAmount: parseFloat(document.getElementById('amountSlider').value) || 0,
+                tenureMonths: parseInt(document.getElementById('tenureSlider').value) || 0
+            };
+
+            try {
+                const res = await fetch(`${API_BASE}/loan/check`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                if (!res.ok) throw new Error('Server error');
+                const data = await res.json();
+                sessionStorage.setItem('loanResult', JSON.stringify(data));
+                window.location.href = 'result.html';
+            } catch (err) {
+                overlay.classList.remove('active');
+                showToast('❌ Cannot reach the backend server. Make sure it is running at localhost:8080.', true);
+            }
+        }
+
+        window.addEventListener('load', () => {
+            if (typeof gsap !== 'undefined') {
+                gsap.from('.hero-content > *', { opacity: 0, y: 30, duration: 1, stagger: 0.2, ease: 'power4.out' });
+                gsap.from('.glass-card', { opacity: 0, scale: 0.95, duration: 1.2, delay: 0.5, ease: 'power2.out' });
+            }
+            updateSimulation();
+        });
+    </script>
+</body>
+</html>

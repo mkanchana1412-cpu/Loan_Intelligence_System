@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Eligibility Criteria | ULIS Intelligence</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+</head>
+
+<body class="bg-[#020617] overflow-x-hidden">
+    <div class="bg-mesh"></div>
+
+    <nav class="fixed w-full z-50 px-8 py-6 flex justify-between items-center backdrop-blur-md bg-transparent border-b border-white/5">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center shadow-lg shadow-indigo-500/30">
+                <i class="fas fa-landmark text-white"></i>
+            </div>
+            <a th:href="@{/}" class="font-bold text-xl tracking-tight text-white">ULIS <span class="text-indigo-400 font-normal">Intelligence</span></a>
+        </div>
+        <div class="hidden md:flex gap-8 text-sm font-medium text-slate-400">
+            <a th:href="@{/}" class="hover:text-white transition-colors">Home</a>
+            <a th:href="@{/eligibility}" class="text-white transition-colors">Eligibility</a>
+            <a th:href="@{/emi-calculator}" class="hover:text-white transition-colors">EMI Calculator</a>
+        </div>
+        <div>
+            <a th:href="@{/logout}" class="px-6 py-2.5 rounded-xl border border-white/10 text-sm font-semibold hover:bg-white/5 transition-all text-white">Sign Out</a>
+        </div>
+    </nav>
+
+    <main class="pt-32 pb-20 px-6 max-w-4xl mx-auto">
+        <header class="text-center mb-16">
+            <h1 class="text-4xl md:text-5xl font-bold mb-6 gradient-text">How We Assess You</h1>
+            <p class="text-slate-400 text-lg">Transparent, AI-driven evaluation criteria designed to empower your financial journey.</p>
+        </header>
+
+        <div class="grid md:grid-cols-2 gap-8">
+            <div class="glass-card">
+                <div class="w-12 h-12 bg-indigo-500/10 rounded-2xl flex items-center justify-center mb-6 border border-indigo-500/20">
+                    <i class="fas fa-user-clock text-indigo-400 text-xl"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-3 text-white">Age Bracket</h3>
+                <p class="text-slate-400 text-sm leading-relaxed">Applicants must be between **18 and 65 years** of age. This ensures financial stability and alignment with global retirement norms.</p>
+            </div>
+
+            <div class="glass-card">
+                <div class="w-12 h-12 bg-purple-500/10 rounded-2xl flex items-center justify-center mb-6 border border-purple-500/20">
+                    <i class="fas fa-coins text-purple-400 text-xl"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-3 text-white">Minimum Income</h3>
+                <p class="text-slate-400 text-sm leading-relaxed">A stable monthly income of at least **₹15,000** is required to ensure repayment capability across all loan types.</p>
+            </div>
+
+            <div class="glass-card">
+                <div class="w-12 h-12 bg-emerald-500/10 rounded-2xl flex items-center justify-center mb-6 border border-emerald-500/20">
+                    <i class="fas fa-shield-alt text-emerald-400 text-xl"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-3 text-white">Credit Score (CIBIL)</h3>
+                <p class="text-slate-400 text-sm leading-relaxed">We require a minimum credit score of **600**. Higher scores (750+) unlock premium interest rates and faster processing.</p>
+            </div>
+
+            <div class="glass-card">
+                <div class="w-12 h-12 bg-rose-500/10 rounded-2xl flex items-center justify-center mb-6 border border-rose-500/20">
+                    <i class="fas fa-chart-pie text-rose-400 text-xl"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-3 text-white">Debt-to-Income (DTI)</h3>
+                <p class="text-slate-400 text-sm leading-relaxed">Your total existing EMI commitments should not exceed **45%** of your monthly gross income. This prevents over-leveraging.</p>
+            </div>
+        </div>
+
+        <section class="mt-16 p-8 rounded-3xl bg-indigo-600/5 border border-indigo-500/10 text-center">
+            <h2 class="text-2xl font-bold text-white mb-4">Ready to find out?</h2>
+            <p class="text-slate-400 mb-8 max-w-xl mx-auto">Our AI engine takes less than 60 seconds to analyze your profile and give you a real-time decision.</p>
+            <a th:href="@{/}" class="btn-primary inline-flex px-12 max-w-xs mx-auto">Start Application <i class="fas fa-arrow-right"></i></a>
+        </section>
+    </main>
+
+    <script>
+        window.addEventListener('load', () => {
+            gsap.from(".glass-card", {
+                opacity: 0,
+                y: 30,
+                duration: 1,
+                stagger: 0.1,
+                ease: "power3.out"
+            });
+            gsap.from("header", { opacity: 0, y: -20, duration: 1 });
+        });
+    </script>
+</body>
+
+</html>

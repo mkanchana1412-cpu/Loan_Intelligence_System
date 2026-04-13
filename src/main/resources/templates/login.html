@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>UnifiedLoanIntelligenceSystem</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/style.css?v=10}" href="/css/style.css?v=10">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+
+<body class="login-body">
+    <div class="login-container">
+        <div class="logo-section">
+            <h1>Unified Loan<br>Intelligence</h1>
+        </div>
+
+        <form th:action="@{/login}" method="post" class="login-form" onsubmit="sessionStorage.setItem('loggedIn', 'true'); return true;">
+            <div th:if="${error}" class="error-msg">
+                <i class="fas fa-exclamation-circle"></i> Invalid Username or Password
+            </div>
+
+            <div class="input-field">
+                <i class="fas fa-user"></i>
+                <input type="text" name="username" placeholder="Username" value="admin" required>
+            </div>
+
+            <div class="input-field">
+                <i class="fas fa-lock"></i>
+                <input type="text" name="password" placeholder="Password" value="admin123" required autocomplete="off" style="text-security:disc; -webkit-text-security:disc;">
+            </div>
+
+            <button type="submit">Unlock Portal <i class="fas fa-arrow-right"></i></button>
+
+            <div class="login-footer">
+                <p>Welcome to your financial intelligence dashboard 🚀</p>
+                <small>Credentials: <b>admin / admin123</b></small>
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>

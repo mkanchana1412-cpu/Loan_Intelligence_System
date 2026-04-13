@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UnifiedLoanIntelligenceSystem</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="login-body">
+
+<div class="login-container">
+    <div class="logo-section">
+        <h1>Unified Loan<br>Intelligence</h1>
+    </div>
+
+    <div id="errorMsg" class="error-msg" style="display:none;">
+        <i class="fas fa-exclamation-circle"></i> Invalid Username or Password
+    </div>
+
+    <div class="login-form">
+        <div class="input-field">
+            <i class="fas fa-user"></i>
+            <input type="text" id="username" placeholder="Username" required>
+        </div>
+        <div class="input-field">
+            <i class="fas fa-lock"></i>
+            <input type="password" id="password" placeholder="Password" required>
+        </div>
+        <button id="loginBtn" onclick="doLogin()">
+            Unlock Portal <i class="fas fa-arrow-right"></i>
+        </button>
+        <div class="login-footer">
+            <p>Welcome to your financial intelligence dashboard 🚀</p>
+            <small>Credentials: <b>admin / admin123</b></small>
+        </div>
+    </div>
+</div>
+
+<script>
+    // If already logged in, go to dashboard
+    if (sessionStorage.getItem('loggedIn') === 'true') {
+        window.location.href = 'index.html';
+    }
+
+    function doLogin() {
+        const u = document.getElementById('username').value;
+        const p = document.getElementById('password').value;
+        if (u === 'admin' && p === 'admin123') {
+            sessionStorage.setItem('loggedIn', 'true');
+            window.location.href = 'index.html';
+        } else {
+            document.getElementById('errorMsg').style.display = 'flex';
+        }
+    }
+
+    // Allow Enter key
+    document.addEventListener('keydown', e => {
+        if (e.key === 'Enter') doLogin();
+    });
+</script>
+</body>
+</html>

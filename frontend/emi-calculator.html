@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UnifiedLoanIntelligenceSystem</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-dark">
+    <div class="bg-mesh"></div>
+    <nav class="navbar">
+        <div class="nav-brand">
+            <div class="nav-logo"></div>
+            <span class="nav-title">UnifiedLoanIntelligenceSystem</span>
+        </div>
+        <div class="nav-links">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="eligibility.html" class="nav-link">Eligibility</a>
+            <a href="emi-calculator.html" class="nav-link active">EMI Calculator</a>
+        </div>
+        <div class="nav-actions">
+            <button class="btn-logout" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
+        </div>
+    </nav>
+
+    <div class="page-container">
+        <div class="page-header">
+            <h1 class="gradient-text">EMI Calculator</h1>
+            <p>Plan your repayments with real-time calculations</p>
+        </div>
+
+        <div class="emi-calculator-card">
+            <div class="emi-inputs">
+                <div class="form-group">
+                    <label>LOAN AMOUNT: <span class="text-indigo" id="emiAmountVal">₹1,00,000</span></label>
+                    <input type="range" class="slider" id="emiAmount" min="10000" max="5000000" step="10000" value="100000" oninput="calcEMI()">
+                </div>
+                <div class="form-group">
+                    <label>ANNUAL INTEREST RATE: <span class="text-indigo" id="emiRateVal">10%</span></label>
+                    <input type="range" class="slider" id="emiRate" min="5" max="25" step="0.5" value="10" oninput="calcEMI()">
+                </div>
+                <div class="form-group">
+                    <label>TENURE: <span class="text-indigo" id="emiTenureVal">24 Months</span></label>
+                    <input type="range" class="slider" id="emiTenure" min="6" max="360" step="6" value="24" oninput="calcEMI()">
+                </div>
+            </div>
+
+            <div class="emi-results">
+                <div class="emi-result-card main-emi">
+                    <span class="emi-label">Monthly EMI</span>
+                    <div class="emi-big-value" id="emiValue">₹0</div>
+                </div>
+                <div class="emi-result-grid">
+                    <div class="emi-result-card">
+                        <span class="emi-label">Principal</span>
+                        <div class="emi-value" id="principalVal">₹0</div>
+                    </div>
+                    <div class="emi-result-card">
+                        <span class="emi-label">Total Interest</span>
+                        <div class="emi-value text-yellow" id="interestVal">₹0</div>
+                    </div>
+                    <div class="emi-result-card">
+                        <span class="emi-label">Total Payable</span>
+                        <div class="emi-value text-indigo" id="totalPayableVal">₹0</div>
+                    </div>
+                    <div class="emi-result-card">
+                        <span class="emi-label">Interest %</span>
+                        <div class="emi-value text-red" id="interestPercVal">0%</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        if (sessionStorage.getItem('loggedIn') !== 'true') window.location.href = 'login.html';
+        function logout() { sessionStorage.removeItem('loggedIn'); window.location.href = 'login.html'; }
+
+        function calcEMI() {
+            const P = parseFloat(document.getElementById('emiAmount').value);
+            const r = parseFloat(document.getElementById('emiRate').value) / 12 / 100;
+            const N = parseInt(document.getElementById('emiTenure').value);
+
+            document.getElementById('emiAmountVal').innerText = '₹' + P.toLocaleString('en-IN');
+            document.getElementById('emiRateVal').innerText = document.getElementById('emiRate').value + '%';
+            document.getElementById('emiTenureVal').innerText = N + ' Months';
+
+            const emi = (P * r * Math.pow(1 + r, N)) / (Math.pow(1 + r, N) - 1);
+            const total = emi * N;
+            const interest = total - P;
+
+            document.getElementById('emiValue').innerText = '₹' + Math.round(emi).toLocaleString('en-IN');
+            document.getElementById('principalVal').innerText = '₹' + Math.round(P).toLocaleString('en-IN');
+            document.getElementById('interestVal').innerText = '₹' + Math.round(interest).toLocaleString('en-IN');
+            document.getElementById('totalPayableVal').innerText = '₹' + Math.round(total).toLocaleString('en-IN');
+            document.getElementById('interestPercVal').innerText = Math.round((interest / total) * 100) + '%';
+        }
+
+        calcEMI();
+    </script>
+</body>
+</html>
