@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -56,7 +56,7 @@
                     <div class="result-icon">
                         <i class="fas ${approved ? 'fa-check-circle' : 'fa-times-circle'}"></i>
                     </div>
-                    <h2>${approved ? '✅ LOAN APPROVED' : '❌ LOAN DECLINED'}</h2>
+                    <h2>${approved ? 'LOAN APPROVED' : 'LOAN DECLINED'}</h2>
                     <p class="applicant-name">Applicant: <strong>${data.applicantName || 'N/A'}</strong></p>
                 </div>
 
@@ -73,11 +73,11 @@
                     ${approved ? `
                     <div class="result-stat">
                         <span class="rs-label">Monthly EMI</span>
-                        <span class="rs-value text-indigo">₹${Math.round(data.emi).toLocaleString('en-IN')}</span>
+                        <span class="rs-value text-indigo">Rs ${Math.round(data.emi).toLocaleString('en-IN')}</span>
                     </div>
                     <div class="result-stat">
                         <span class="rs-label">Total Payable</span>
-                        <span class="rs-value">₹${Math.round(data.totalPayable).toLocaleString('en-IN')}</span>
+                        <span class="rs-value">Rs ${Math.round(data.totalPayable).toLocaleString('en-IN')}</span>
                     </div>
                     <div class="result-stat">
                         <span class="rs-label">Interest Rate</span>
@@ -85,7 +85,7 @@
                     </div>
                     <div class="result-stat">
                         <span class="rs-label">Max Eligible</span>
-                        <span class="rs-value">₹${Math.round(data.eligibleAmount).toLocaleString('en-IN')}</span>
+                        <span class="rs-value">Rs ${Math.round(data.eligibleAmount).toLocaleString('en-IN')}</span>
                     </div>
                     ` : ''}
                 </div>
@@ -100,7 +100,7 @@
                     <h4>Loan Summary</h4>
                     <div class="loan-summary-grid">
                         <div><span>Loan Type</span><strong>${data.loanType}</strong></div>
-                        <div><span>Loan Amount</span><strong>₹${Math.round(data.loanAmount).toLocaleString('en-IN')}</strong></div>
+                        <div><span>Loan Amount</span><strong>Rs ${Math.round(data.loanAmount).toLocaleString('en-IN')}</strong></div>
                         <div><span>Tenure</span><strong>${data.tenureMonths} Months</strong></div>
                     </div>
                 </div>` : ''}
@@ -109,3 +109,6 @@
     </script>
 </body>
 </html>
+
+
+

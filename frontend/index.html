@@ -32,7 +32,7 @@
     <main class="main-wrapper">
         <!-- Left: Hero -->
         <section class="hero-content">
-            <div class="hero-tag">ðŸ”¥ Faster. Smarter. Secure.</div>
+            <div class="hero-tag">Faster. Smarter. Secure.</div>
             <h1 class="gradient-text">Instant Loan Approval,<br>Smarter Decisions.</h1>
             <p>Our AI-driven engine analyzes your profile in seconds to give you the best loan rates with minimum documentation.</p>
 
@@ -92,7 +92,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label>AGE (21â€“60)</label>
+                        <label>AGE (21-60)</label>
                         <div class="input-wrapper">
                             <i class="fas fa-calendar-alt"></i>
                             <input type="number" id="ageInput" placeholder="25" min="18" max="100" oninput="updateSimulation()">
@@ -106,7 +106,7 @@
                 <div class="step-content" id="step-2">
                     <h3 class="step-title">Financial Intelligence <i class="fas fa-chart-line text-indigo"></i></h3>
                     <div class="form-group">
-                        <label>MONTHLY INCOME (â‚¹)</label>
+                        <label>MONTHLY INCOME (Rs)</label>
                         <div class="input-wrapper">
                             <i class="fas fa-wallet"></i>
                             <input type="number" id="incomeInput" placeholder="25000" oninput="updateSimulation()">
@@ -117,7 +117,7 @@
                         <input type="range" id="scoreSlider" min="300" max="900" value="750" class="slider" oninput="updateSimulation()">
                     </div>
                     <div class="form-group">
-                        <label>EXISTING MONTHLY EMIs (â‚¹)</label>
+                        <label>EXISTING MONTHLY EMIs (Rs)</label>
                         <div class="input-wrapper">
                             <i class="fas fa-credit-card"></i>
                             <input type="number" id="existingEmiInput" placeholder="0" oninput="updateSimulation()">
@@ -156,7 +156,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label>LOAN AMOUNT: <span class="text-indigo font-bold" id="amountValue">â‚¹25,000</span></label>
+                        <label>LOAN AMOUNT: <span class="text-indigo font-bold" id="amountValue">Rs 25,000</span></label>
                         <input type="range" id="amountSlider" min="5000" max="500000" step="5000" value="25000" class="slider" oninput="updateSimulation()">
                     </div>
                     <div class="form-group">
@@ -182,8 +182,8 @@
                     <div class="status-badge eligible" id="statusBadge">ELIGIBLE</div>
                 </div>
                 <div class="live-stats">
-                    <div class="stat-card"><span class="stat-label">Eligible Cap</span><div class="stat-value" id="liveEligible">â‚¹0</div></div>
-                    <div class="stat-card"><span class="stat-label">Estimated EMI</span><div class="stat-value" id="liveEMI">â‚¹0</div></div>
+                    <div class="stat-card"><span class="stat-label">Eligible Cap</span><div class="stat-value" id="liveEligible">Rs 0</div></div>
+                    <div class="stat-card"><span class="stat-label">Estimated EMI</span><div class="stat-value" id="liveEMI">Rs 0</div></div>
                 </div>
                 <div class="risk-row">
                     <span class="risk-label-text">Risk Assessment</span>
@@ -231,7 +231,7 @@
             const age = parseInt(document.getElementById('ageInput').value);
             if (!name) { showToast('Please enter your full name.', true); return; }
             if (!age || isNaN(age)) { showToast('Please enter your age.', true); return; }
-            if (age < 21 || age > 60) showToast('Age should be between 21â€“60 for best eligibility.', true);
+            if (age < 21 || age > 60) showToast('Age should be between 2160 for best eligibility.', true);
             nextStep(2);
         }
 
@@ -259,7 +259,7 @@
             const loanType = document.getElementById('loanTypeInput').value;
 
             document.getElementById('scoreValue').innerText = score;
-            document.getElementById('amountValue').innerText = 'â‚¹' + amount.toLocaleString('en-IN');
+            document.getElementById('amountValue').innerText = 'Rs ' + amount.toLocaleString('en-IN');
             document.getElementById('tenureValue').innerText = tenure + ' Months';
 
             let isEligible = true;
@@ -267,7 +267,7 @@
             const eligibleMax = income * 0.45 * 36;
             const dti = income > 0 ? existingEmi / income : 0;
 
-            if (age < 21 || age > 60) { isEligible = false; reason = 'Age outside 21â€“60 eligibility range.'; }
+            if (age < 21 || age > 60) { isEligible = false; reason = 'Age outside 21-60 eligibility range.'; }
             else if (income < 15000) { isEligible = false; reason = 'Minimum monthly income condition not met.'; }
             else if (score < 650) { isEligible = false; reason = 'Credit score below threshold.'; }
             else if (dti > 0.45) { isEligible = false; reason = 'Debt-to-income exceeds 45% limit.'; }
@@ -275,25 +275,25 @@
             const badge = document.getElementById('statusBadge');
             if (!isEligible) {
                 badge.innerText = 'NOT ELIGIBLE'; badge.className = 'status-badge not-eligible';
-                document.getElementById('liveEMI').innerText = 'â€“';
-                document.getElementById('liveEligible').innerText = 'â‚¹0';
-                document.getElementById('riskLabel').innerText = 'HIGH RISK ðŸ”´';
+                document.getElementById('liveEMI').innerText = '-';
+                document.getElementById('liveEligible').innerText = 'Rs 0';
+                document.getElementById('riskLabel').innerText = 'HIGH RISK';
                 document.getElementById('riskLabel').className = 'risk-label text-red';
                 if (typeof gsap !== 'undefined') gsap.to('#riskBar', { width: '90%', backgroundColor: '#f43f5e', duration: 1 });
             } else {
                 badge.innerText = 'ELIGIBLE'; badge.className = 'status-badge eligible';
-                document.getElementById('liveEligible').innerText = 'â‚¹' + Math.round(eligibleMax).toLocaleString('en-IN');
+                document.getElementById('liveEligible').innerText = 'Rs ' + Math.round(eligibleMax).toLocaleString('en-IN');
                 let rate = (score >= 750) ? 0.085 : 0.105;
                 if (loanType === 'Home') rate -= 0.005;
                 const mr = rate / 12;
                 const emi = amount > 0 && tenure > 0 ? (amount * mr * Math.pow(1 + mr, tenure)) / (Math.pow(1 + mr, tenure) - 1) : 0;
-                document.getElementById('liveEMI').innerText = 'â‚¹' + Math.round(emi).toLocaleString('en-IN');
+                document.getElementById('liveEMI').innerText = 'Rs ' + Math.round(emi).toLocaleString('en-IN');
                 if (score >= 750) {
-                    document.getElementById('riskLabel').innerText = 'LOW RISK ðŸŸ¢';
+                    document.getElementById('riskLabel').innerText = 'LOW RISK';
                     document.getElementById('riskLabel').className = 'risk-label text-green';
                     if (typeof gsap !== 'undefined') gsap.to('#riskBar', { width: '25%', backgroundColor: '#10b981', duration: 1 });
                 } else {
-                    document.getElementById('riskLabel').innerText = 'MODERATE ðŸŸ¡';
+                    document.getElementById('riskLabel').innerText = 'MODERATE RISK';
                     document.getElementById('riskLabel').className = 'risk-label text-yellow';
                     if (typeof gsap !== 'undefined') gsap.to('#riskBar', { width: '60%', backgroundColor: '#f59e0b', duration: 1 });
                 }
@@ -424,3 +424,5 @@
     </script>
 </body>
 </html>
+
+

@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UELIS – EMI Calculator</title>
+    <title>UELIS  EMI Calculator</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" th:href="@{/css/style.css?v=10}" href="/css/style.css?v=10">
 </head>
@@ -33,7 +33,7 @@
         <div class="emi-calculator-card">
             <div class="emi-inputs">
                 <div class="form-group">
-                    <label>LOAN AMOUNT: <span class="text-indigo" id="emiAmountVal">₹1,00,000</span></label>
+                    <label>LOAN AMOUNT: <span class="text-indigo" id="emiAmountVal">Rs 1,00,000</span></label>
                     <input type="range" class="slider" id="emiAmount" min="10000" max="5000000" step="10000" value="100000" oninput="calcEMI()">
                 </div>
                 <div class="form-group">
@@ -49,20 +49,20 @@
             <div class="emi-results">
                 <div class="emi-result-card main-emi">
                     <span class="emi-label">Monthly EMI</span>
-                    <div class="emi-big-value" id="emiValue">₹0</div>
+                    <div class="emi-big-value" id="emiValue">Rs 0</div>
                 </div>
                 <div class="emi-result-grid">
                     <div class="emi-result-card">
                         <span class="emi-label">Principal</span>
-                        <div class="emi-value" id="principalVal">₹0</div>
+                        <div class="emi-value" id="principalVal">Rs 0</div>
                     </div>
                     <div class="emi-result-card">
                         <span class="emi-label">Total Interest</span>
-                        <div class="emi-value text-yellow" id="interestVal">₹0</div>
+                        <div class="emi-value text-yellow" id="interestVal">Rs 0</div>
                     </div>
                     <div class="emi-result-card">
                         <span class="emi-label">Total Payable</span>
-                        <div class="emi-value text-indigo" id="totalPayableVal">₹0</div>
+                        <div class="emi-value text-indigo" id="totalPayableVal">Rs 0</div>
                     </div>
                     <div class="emi-result-card">
                         <span class="emi-label">Interest %</span>
@@ -82,7 +82,7 @@
             const r = parseFloat(document.getElementById('emiRate').value) / 12 / 100;
             const N = parseInt(document.getElementById('emiTenure').value);
 
-            document.getElementById('emiAmountVal').innerText = '₹' + P.toLocaleString('en-IN');
+            document.getElementById('emiAmountVal').innerText = 'Rs ' + P.toLocaleString('en-IN');
             document.getElementById('emiRateVal').innerText = document.getElementById('emiRate').value + '%';
             document.getElementById('emiTenureVal').innerText = N + ' Months';
 
@@ -90,10 +90,10 @@
             const total = emi * N;
             const interest = total - P;
 
-            document.getElementById('emiValue').innerText = '₹' + Math.round(emi).toLocaleString('en-IN');
-            document.getElementById('principalVal').innerText = '₹' + Math.round(P).toLocaleString('en-IN');
-            document.getElementById('interestVal').innerText = '₹' + Math.round(interest).toLocaleString('en-IN');
-            document.getElementById('totalPayableVal').innerText = '₹' + Math.round(total).toLocaleString('en-IN');
+            document.getElementById('emiValue').innerText = 'Rs ' + Math.round(emi).toLocaleString('en-IN');
+            document.getElementById('principalVal').innerText = 'Rs ' + Math.round(P).toLocaleString('en-IN');
+            document.getElementById('interestVal').innerText = 'Rs ' + Math.round(interest).toLocaleString('en-IN');
+            document.getElementById('totalPayableVal').innerText = 'Rs ' + Math.round(total).toLocaleString('en-IN');
             document.getElementById('interestPercVal').innerText = Math.round((interest / total) * 100) + '%';
         }
 
@@ -101,3 +101,6 @@
     </script>
 </body>
 </html>
+
+
+
