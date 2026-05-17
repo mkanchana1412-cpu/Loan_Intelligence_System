@@ -41,6 +41,7 @@
         function logout() { sessionStorage.removeItem('loggedIn'); window.location.href = 'login.html'; }
 
         const data = JSON.parse(sessionStorage.getItem('loanResult') || '{}');
+        const demoMode = sessionStorage.getItem('demoMode') === 'true';
 
         if (!data || !data.hasOwnProperty('eligible')) {
             document.getElementById('resultCard').innerHTML = '<p style="color:#94a3b8;text-align:center;padding:2rem;">No result data found. <a href="index.html" style="color:#818cf8;">Go back</a></p>';
@@ -50,6 +51,7 @@
             const scoreWidth = Math.min(Math.round((data.aiScore / 90) * 100), 100);
 
             document.getElementById('resultCard').innerHTML = `
+                ${demoMode ? '<div class="result-explanation"><i class="fas fa-circle-info text-indigo"></i><p>Static GitHub Pages demo mode. Run the Java backend locally for the full Spring Boot API version.</p></div>' : ''}
                 <div class="result-status ${approved ? 'approved' : 'rejected'}">
                     <div class="result-icon">
                         <i class="fas ${approved ? 'fa-check-circle' : 'fa-times-circle'}"></i>

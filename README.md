@@ -9,7 +9,13 @@ This project is now fully functional and complete. It features an AI-driven cred
 - **EMI Estimation**: Automatically calculates monthly installments for approved loans.
 - **Modern UI**: responsive design with glassmorphism and real-time validation hints.
 
-## How to Run
+## Live Demo
+GitHub Pages can host only the static frontend, not the Java Spring Boot backend.
+
+- Static demo: https://mkanchana1412-cpu.github.io/Loan_Intelligence_System/
+- Full backend app: run locally and open `http://localhost:8080/`
+
+## How to Run Full App Locally
 1. **Open the project** in VS Code.
 2. **Locate the main class**: [UnifiedLoanApplication.java](file:///c:/Users/KANCHANA/OneDrive/Documents/UnifiedLoanIntelligenceSystem/src/main/java/com/uelis/UnifiedLoanApplication.java).
 3. **Run the Application**: Click the "Run" button above the `main` method or press `F5`.
