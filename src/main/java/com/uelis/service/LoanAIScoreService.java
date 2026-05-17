@@ -39,3 +39,8 @@ public class LoanAIScoreService {
         return "HIGH RISK";
     }
 }
+//mvn spring-boot:run
+//start http://localhost:8080/
+//java -jar target\UnifiedLoanIntelligenceSystem-0.0.1-SNAPSHOT.jar
+
+

@@ -164,6 +164,7 @@ h1,h2,h3 { font-family: 'Poppins', sans-serif; font-weight: 700; }
 .feature-card i   { font-size:1.5rem; margin-bottom:0.75rem; display:block; }
 .feature-card h3  { font-size:0.95rem; font-weight:600; margin-bottom:0.3rem; }
 .feature-card p   { font-size:0.8rem; color:var(--text-muted); }
+.feature-card:nth-child(3), .feature-card:nth-child(4) { background:rgba(255,255,255,0.025); }
 
 .trust-badges     { display:flex; gap:1.5rem; opacity:0.7; flex-wrap:wrap; }
 .badge-item       { display:flex; align-items:center; gap:0.5rem; font-size:0.85rem; font-weight:500; }
@@ -332,6 +333,16 @@ select option { background:#0f172a; color:#fff; }
 .risk-meter-bar { height:100%; width:0%; background:var(--green); transition:width 1s cubic-bezier(0.16,1,0.3,1), background-color 0.5s; border-radius:100px; }
 
 .live-reason { font-size:0.75rem; color:var(--text-muted); margin-top:1rem; font-style:italic; border-top:1px solid rgba(255,255,255,0.05); padding-top:0.8rem; line-height:1.5; }
+.quick-tools {
+    display:grid; grid-template-columns:repeat(3,1fr); gap:0.7rem; margin-top:1rem;
+}
+.quick-tools div {
+    display:flex; flex-direction:column; align-items:center; gap:0.35rem;
+    padding:0.8rem 0.5rem; border-radius:12px;
+    background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.06);
+    color:var(--text-muted); font-size:0.7rem; text-align:center;
+}
+.quick-tools i { color:var(--primary); font-size:1rem; }
 
 /* ──────────────────────────────────────────
    TOAST
@@ -424,6 +435,96 @@ select option { background:#0f172a; color:#fff; }
 .result-explanation i { font-size:1.3rem; margin-top:2px; flex-shrink:0; }
 .result-explanation p { font-size:0.92rem; color:var(--text-muted); line-height:1.7; }
 
+.advisory-panel {
+    padding:1.5rem 2rem;
+    border-bottom:1px solid var(--glass-border);
+    background:rgba(99,102,241,0.035);
+}
+.advisory-block h4 {
+    display:flex; align-items:center; gap:0.6rem;
+    font-size:0.85rem; text-transform:uppercase; letter-spacing:0.08em;
+    color:var(--text-muted); margin-bottom:0.9rem;
+}
+.advisory-block ul { display:grid; gap:0.7rem; list-style:none; }
+.advisory-block li {
+    position:relative; padding-left:1.1rem;
+    color:var(--text-muted); font-size:0.9rem; line-height:1.6;
+}
+.advisory-block li::before {
+    content:''; position:absolute; left:0; top:0.72rem;
+    width:6px; height:6px; border-radius:50%; background:var(--primary);
+}
+.advisory-grid {
+    display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-top:1.2rem;
+}
+.advisory-mini {
+    padding:1rem; border-radius:14px;
+    background:rgba(255,255,255,0.03);
+    border:1px solid rgba(255,255,255,0.06);
+}
+.advisory-mini span {
+    display:block; font-size:0.7rem; font-weight:700;
+    color:var(--primary); text-transform:uppercase; letter-spacing:0.06em;
+    margin-bottom:0.5rem;
+}
+.advisory-mini p { color:var(--text-muted); font-size:0.88rem; line-height:1.6; }
+
+.smart-toolkit-box {
+    display:grid; grid-template-columns:1fr 1fr; gap:1rem;
+    padding:1.5rem 2rem; border-bottom:1px solid var(--glass-border);
+    background:linear-gradient(135deg, rgba(16,185,129,0.05), rgba(99,102,241,0.035));
+}
+.toolkit-card {
+    padding:1.1rem; border-radius:16px;
+    background:rgba(2,6,23,0.28); border:1px solid rgba(255,255,255,0.07);
+}
+.toolkit-card h4 {
+    display:flex; align-items:center; gap:0.55rem;
+    font-size:0.82rem; text-transform:uppercase; letter-spacing:0.07em;
+    color:var(--text-muted); margin-bottom:0.7rem;
+}
+.toolkit-card p { color:var(--text-muted); font-size:0.88rem; line-height:1.6; }
+.document-chips { display:flex; flex-wrap:wrap; gap:0.5rem; }
+.document-chips span {
+    padding:0.42rem 0.65rem; border-radius:999px;
+    background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.08);
+    color:#dbeafe; font-size:0.75rem;
+}
+
+.bank-offers-box {
+    padding:1.5rem 2rem;
+    border-bottom:1px solid var(--glass-border);
+    background:rgba(255,255,255,0.015);
+}
+.bank-offers-box h4 {
+    display:flex; align-items:center; gap:0.6rem;
+    font-size:0.85rem; text-transform:uppercase; letter-spacing:0.08em;
+    color:var(--text-muted); margin-bottom:1rem;
+}
+.bank-offers-grid {
+    display:grid; grid-template-columns:repeat(2,1fr); gap:1rem;
+}
+.bank-offer-card {
+    padding:1rem; border-radius:14px;
+    background:rgba(255,255,255,0.03);
+    border:1px solid rgba(255,255,255,0.06);
+}
+.bank-offer-head {
+    display:flex; justify-content:space-between; align-items:center;
+    gap:0.8rem; margin-bottom:0.6rem;
+}
+.bank-offer-head strong { font-size:0.98rem; }
+.bank-offer-head span {
+    color:var(--green); font-weight:800; font-size:0.85rem;
+}
+.bank-offer-amount {
+    color:#fff; font-size:1.45rem; font-weight:800; margin-bottom:0.5rem;
+}
+.bank-offer-meta {
+    display:flex; flex-direction:column; gap:0.25rem;
+    color:var(--text-muted); font-size:0.78rem; line-height:1.4;
+}
+
 .loan-summary-box { padding:1.5rem 2rem; }
 .loan-summary-box h4 { font-size:0.85rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--text-muted); margin-bottom:1rem; }
 .loan-summary-grid { display:flex; gap:2rem; flex-wrap:wrap; }
@@ -479,6 +580,9 @@ select option { background:#0f172a; color:#fff; }
     border-radius:28px; padding:2.5rem;
 }
 @media(max-width:768px) { .emi-calculator-card { grid-template-columns:1fr; } }
+@media(max-width:768px) { .advisory-grid { grid-template-columns:1fr; } }
+@media(max-width:768px) { .bank-offers-grid { grid-template-columns:1fr; } }
+@media(max-width:768px) { .smart-toolkit-box { grid-template-columns:1fr; } }
 
 .emi-results { display:flex; flex-direction:column; gap:1.2rem; }
 

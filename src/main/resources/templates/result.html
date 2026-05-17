@@ -48,6 +48,10 @@
             const approved = data.eligible;
             const riskColor = data.risk === 'LOW RISK' ? '#10b981' : data.risk === 'MODERATE RISK' ? '#f59e0b' : '#f43f5e';
             const scoreWidth = Math.min(Math.round((data.aiScore / 90) * 100), 100);
+            const suggestions = Array.isArray(data.improvementSuggestions) ? data.improvementSuggestions : [];
+            const bankOffers = Array.isArray(data.bankOffers) ? data.bankOffers : [];
+            const requiredDocuments = Array.isArray(data.requiredDocuments) ? data.requiredDocuments : [];
+            const confidence = data.approvalConfidence || 0;
 
             document.getElementById('resultCard').innerHTML = `
                 <div class="result-status ${approved ? 'approved' : 'rejected'}">
@@ -67,6 +71,11 @@
                     <div class="result-stat">
                         <span class="rs-label">Risk Level</span>
                         <span class="rs-value" style="color:${riskColor}">${data.risk}</span>
+                    </div>
+                    <div class="result-stat">
+                        <span class="rs-label">Approval Confidence</span>
+                        <span class="rs-value">${confidence}<span class="rs-unit">%</span></span>
+                        <div class="score-bar-bg"><div class="score-bar" style="width:${confidence}%;background:${riskColor};"></div></div>
                     </div>
                     ${approved ? `
                     <div class="result-stat">
@@ -91,6 +100,65 @@
                 <div class="result-explanation">
                     <i class="fas fa-robot text-indigo"></i>
                     <p>${data.explanation}</p>
+                </div>
+
+                <div class="advisory-panel">
+                    <div class="advisory-block">
+                        <h4><i class="fas fa-lightbulb text-indigo"></i> Improvement Suggestions</h4>
+                        <ul>
+                            ${suggestions.map(item => `<li>${item}</li>`).join('')}
+                        </ul>
+                    </div>
+                    <div class="advisory-grid">
+                        <div class="advisory-mini">
+                            <span>What-if Simulation</span>
+                            <p>${data.whatIfSimulation || 'Adjust profile values to simulate a better approval path.'}</p>
+                        </div>
+                        <div class="advisory-mini">
+                            <span>Personalized Repayment Plan</span>
+                            <p>${data.repaymentPlan || 'Submit complete loan details to generate a repayment plan.'}</p>
+                        </div>
+                        <div class="advisory-mini">
+                            <span>Loan Type Recommendation</span>
+                            <p>${data.loanTypeRecommendation || 'Choose the loan purpose that best matches your income and credit profile.'}</p>
+                        </div>
+                        <div class="advisory-mini">
+                            <span>Affordability Status</span>
+                            <p>${data.affordabilityStatus || 'Affordability will be calculated after loan approval.'}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="smart-toolkit-box">
+                    <div class="toolkit-card">
+                        <h4><i class="fas fa-piggy-bank text-green"></i> Prepayment Savings Tip</h4>
+                        <p>${data.prepaymentSavingsTip || 'Make small early prepayments to reduce total interest burden.'}</p>
+                    </div>
+                    <div class="toolkit-card">
+                        <h4><i class="fas fa-file-circle-check text-indigo"></i> Required Documents</h4>
+                        <div class="document-chips">
+                            ${requiredDocuments.map(doc => `<span>${doc}</span>`).join('')}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bank-offers-box">
+                    <h4><i class="fas fa-building-columns text-indigo"></i> Bank-wise Loan Offers</h4>
+                    <div class="bank-offers-grid">
+                        ${bankOffers.map(offer => `
+                            <div class="bank-offer-card">
+                                <div class="bank-offer-head">
+                                    <strong>${offer.bankName}</strong>
+                                    <span>${offer.interestRate}%</span>
+                                </div>
+                                <div class="bank-offer-amount">${offer.offeredAmount > 0 ? 'Rs ' + Math.round(offer.offeredAmount).toLocaleString('en-IN') : 'Not available'}</div>
+                                <div class="bank-offer-meta">
+                                    <span>${offer.estimatedEmi > 0 ? 'EMI: Rs ' + Math.round(offer.estimatedEmi).toLocaleString('en-IN') : 'EMI: Not calculated'}</span>
+                                    <span>${offer.decision}</span>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
                 </div>
 
                 ${approved ? `

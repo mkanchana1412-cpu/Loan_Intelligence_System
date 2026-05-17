@@ -2,6 +2,7 @@ package com.uelis.controller;
 
 import com.uelis.model.LoanApplication;
 import com.uelis.model.LoanResult;
+import com.uelis.service.LoanAdvisoryService;
 import com.uelis.service.LoanAIScoreService;
 import com.uelis.service.LoanEligibilityService;
 import com.uelis.service.LoanExplainabilityService;
@@ -17,13 +18,16 @@ public class LoanApiController {
     private final LoanEligibilityService eligibilityService;
     private final LoanAIScoreService aiScoreService;
     private final LoanExplainabilityService explainService;
+    private final LoanAdvisoryService advisoryService;
 
     public LoanApiController(LoanEligibilityService eligibilityService,
                              LoanAIScoreService aiScoreService,
-                             LoanExplainabilityService explainService) {
+                             LoanExplainabilityService explainService,
+                             LoanAdvisoryService advisoryService) {
         this.eligibilityService = eligibilityService;
         this.aiScoreService = aiScoreService;
         this.explainService = explainService;
+        this.advisoryService = advisoryService;
     }
 
     /** Health check */
@@ -60,6 +64,15 @@ public class LoanApiController {
         result.setAiScore(aiScore);
         result.setRisk(risk);
         result.setExplanation(explanation);
+        result.setApprovalConfidence(advisoryService.approvalConfidence(loan, aiScore, eligible));
+        result.setImprovementSuggestions(advisoryService.improvementSuggestions(loan, eligible));
+        result.setWhatIfSimulation(advisoryService.whatIfSimulation(loan, eligible));
+        result.setRepaymentPlan(advisoryService.repaymentPlan(loan, eligible, rate, emi));
+        result.setBankOffers(advisoryService.bankOffers(loan, eligible));
+        result.setLoanTypeRecommendation(advisoryService.loanTypeRecommendation(loan));
+        result.setAffordabilityStatus(advisoryService.affordabilityStatus(loan, emi));
+        result.setPrepaymentSavingsTip(advisoryService.prepaymentSavingsTip(loan, rate));
+        result.setRequiredDocuments(advisoryService.requiredDocuments(loan));
         result.setEmi(emi);
         result.setTotalPayable(totalPayable);
         result.setEligibleAmount(eligibleAmount);

@@ -1,6 +1,7 @@
 package com.uelis.controller;
 
 import com.uelis.model.LoanApplication;
+import com.uelis.service.LoanAdvisoryService;
 import com.uelis.service.LoanAIScoreService;
 import com.uelis.service.LoanEligibilityService;
 import com.uelis.service.LoanExplainabilityService;
@@ -23,6 +24,8 @@ public class LoanWebController {
     private LoanAIScoreService aiScoreService;
     @Autowired
     private LoanExplainabilityService explainService;
+    @Autowired
+    private LoanAdvisoryService advisoryService;
 
     @GetMapping({"/", "/index", "/index.html"})
     public String showForm(Model model, HttpSession session) {
@@ -95,8 +98,9 @@ public class LoanWebController {
         double emi = 0;
         double totalPayable = 0;
         double eligibleAmount = 0;
+        double rate = 0;
         if (eligible) {
-            double rate = (loanApplication.getCreditScore() >= 750) ? 8.5 : 10.5;
+            rate = (loanApplication.getCreditScore() >= 750) ? 8.5 : 10.5;
       
             if ("Home".equals(loanApplication.getLoanType())) rate -= 0.5;
             
@@ -110,6 +114,15 @@ public class LoanWebController {
         model.addAttribute("aiScore", aiScore);
         model.addAttribute("risk", risk);
         model.addAttribute("explanation", explanation);
+        model.addAttribute("approvalConfidence", advisoryService.approvalConfidence(loanApplication, aiScore, eligible));
+        model.addAttribute("improvementSuggestions", advisoryService.improvementSuggestions(loanApplication, eligible));
+        model.addAttribute("whatIfSimulation", advisoryService.whatIfSimulation(loanApplication, eligible));
+        model.addAttribute("repaymentPlan", advisoryService.repaymentPlan(loanApplication, eligible, rate, emi));
+        model.addAttribute("bankOffers", advisoryService.bankOffers(loanApplication, eligible));
+        model.addAttribute("loanTypeRecommendation", advisoryService.loanTypeRecommendation(loanApplication));
+        model.addAttribute("affordabilityStatus", advisoryService.affordabilityStatus(loanApplication, emi));
+        model.addAttribute("prepaymentSavingsTip", advisoryService.prepaymentSavingsTip(loanApplication, rate));
+        model.addAttribute("requiredDocuments", advisoryService.requiredDocuments(loanApplication));
         model.addAttribute("emi", emi);
         model.addAttribute("totalPayable", totalPayable);
         model.addAttribute("eligibleAmount", eligibleAmount);
